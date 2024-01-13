@@ -29,11 +29,13 @@ class SbbApplicationTests {
 
 	@AfterEach
 	void cleanAll() {
-		questionRepository.deleteAll();
-		answerRepository.deleteAll();
+
 	}
 	@BeforeEach
 	void setup() {
+		//questionRepository.deleteAll();
+		//answerRepository.deleteAll();
+
 		Question q1 = new Question();
 		q1.setSubject("sbb가 무엇인가요?");
 		q1.setContent("sbb에 대해서 알고 싶습니다.");
@@ -47,42 +49,6 @@ class SbbApplicationTests {
 		questionRepository.save(q2);  // 두번째 질문 저장
 	}
 
-	@Transactional
-	@Test
-	void testJpa2() {
-		Optional<Question> oq = questionRepository.findById(2);
-		assertTrue(oq.isPresent());
-		Question newq2 = oq.get();
-		assertEquals(2, newq2.getId());
-
-		Answer a = new Answer();
-		a.setContent("네 자동으로 생성됩니다.");
-		a.setQuestion(newq2);  // 어떤 질문의 답변인지 알기위해서 Question 객체가 필요하다.
-		a.setCreateDate(LocalDateTime.now());
-		answerRepository.save(a);//두번째 질문에 대한 답변 저장
-
-		//답변 데이터를 통해 질문 데이터 찾기 vs 질문 데이터를 통해 답변 데이터 찾기
-		//findAnswersFromQuestion();
-		Optional<Question> oq2 = questionRepository.findById(2);
-		assertTrue(oq2.isPresent());
-		Question q = oq2.get();
-		System.out.println(q.getAnswerList());
-		//q.getId()
-		List<Answer> answerList = q.getAnswerList();
-
-		assertEquals(1, q.getAnswerList().size());
-		assertEquals("네 자동으로 생성됩니다.", q.getAnswerList().get(0).getContent());
-		/*Optional<Question> oq = questionRepository.findById(2);
-		assertTrue(oq.isPresent());
-		Question q = oq.get();
-
-		List<Answer> answerList = q.getAnswerList();
-
-		assertEquals(1, answerList.size());
-		assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getContent());*/
-	}
-		//@Transactional
-	@Transactional
 	@Test
 	void testJpa() {
 		//질문 데이터 조회하기 - findAll 메서드
@@ -183,31 +149,4 @@ class SbbApplicationTests {
 		Question q = all.get(0);
 		assertEquals("sbb가 무엇인가요?", q.getSubject());
 	}
-
-
-
-	private void saveQuestionData2() {
-		Question q1 = new Question();
-		q1.setSubject("sbb가 무엇인가요?");
-		q1.setContent("sbb에 대해서 알고 싶습니다.");
-		q1.setCreateDate(LocalDateTime.now());
-		questionRepository.save(q1);  // 첫번째 질문 저장
-
-		Question q2 = new Question();
-		q2.setSubject("스프링부트 모델 질문입니다.");
-		q2.setContent("id는 자동으로 생성되나요?");
-		q2.setCreateDate(LocalDateTime.now());
-		questionRepository.save(q2);  // 두번째 질문 저장
-
-		Optional<Question> oq = questionRepository.findById(2);
-		assertTrue(oq.isPresent());
-		Question q = oq.get();
-
-		Answer a = new Answer();
-		a.setContent("네 자동으로 생성됩니다.");
-		a.setQuestion(q);  // 어떤 질문의 답변인지 알기위해서 Question 객체가 필요하다.
-		a.setCreateDate(LocalDateTime.now());
-		answerRepository.save(a);
-	}
-
 }
