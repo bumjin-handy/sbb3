@@ -1,14 +1,15 @@
 package com.mysite.sbb;
 
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Before;
+import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.answer.AnswerRepository;
+import com.mysite.sbb.question.Question;
+import com.mysite.sbb.question.QuestionRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -172,9 +173,9 @@ class JpaTests {
 			assertEquals("네 자동으로 생성됩니다.", q.getAnswerList().get(0).getContent());
 
 		} catch (RuntimeException e) {
-			Assertions.assertEquals("failed to lazily initialize a collection of role: com.mysite.sbb.Question.answerList: could not initialize proxy - no Session", e.getMessage());
+			Assertions.assertEquals("failed to lazily initialize a collection of role: com.mysite.sbb.question.Question.answerList: could not initialize proxy - no Session", e.getMessage());
 		}
-		//org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: com.mysite.sbb.Question.answerList: could not initialize proxy - no Session
+		//org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: com.mysite.sbb.question.Question.answerList: could not initialize proxy - no Session
 
 	}
 
@@ -194,7 +195,7 @@ class JpaTests {
 		assertEquals(1, q.getAnswerList().size());
 		assertEquals("네 자동으로 생성됩니다.", q.getAnswerList().get(0).getContent());
 
-		//org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: com.mysite.sbb.Question.answerList: could not initialize proxy - no Session
+		//org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: com.mysite.sbb.question.Question.answerList: could not initialize proxy - no Session
 
 	}
 
