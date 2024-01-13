@@ -3,12 +3,13 @@ package com.mysite.sbb;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
-@Getter
-@Setter
+@ToString(callSuper = true)
+@Getter @Setter
 @Entity
 public class Question {
     @Id
@@ -25,6 +26,16 @@ public class Question {
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Answer> answerList;
+    private List<Answer> answerList = new ArrayList<>();
 
+    /* User.java */
+    public void addAnswer(Answer answer) {
+        answerList.add(answer);
+        answer.updateQuestion(this);
+    }
+
+    public void removeAnswer(Answer answer) {
+        answerList.remove(answer);
+        answer.setQuestion(null);
+    }
 }
