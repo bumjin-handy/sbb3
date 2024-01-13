@@ -52,8 +52,8 @@ class JpaTests {
 	@AfterEach
 	@DisplayName("DB 데이터 클리어(삭제)")
 	void cleanEach() {
-		questionRepository.deleteAll();
-		answerRepository.deleteAll();
+		//questionRepository.deleteAll();
+		//answerRepository.deleteAll();
 	}
 	@BeforeEach
 	@DisplayName("초기 데이터 입력")
@@ -140,7 +140,6 @@ class JpaTests {
 	}
 
 	@Test
-	@Order(8)
 	@DisplayName("주어진 id에 해당하는 질문을 조회 후 해당 질문에 댓글 추가")
 	void givenQuestionIdWhenAddAnswerThenWorksFine() {
 		Optional<Question> oq = questionRepository.findById(2);
@@ -157,7 +156,6 @@ class JpaTests {
 
 
 	@Test
-	@Order(9)
 	@DisplayName("답변 데이터를 통해 질문 데이터 찾기 vs 질문 데이터를 통해 답변 데이터 찾기")
 	void givenQuestionIdWhenFindAnswerListThenReturnAnswerList() {
 		insertAnswer();
@@ -180,7 +178,6 @@ class JpaTests {
 	}
 
 	@Test
-	@Order(10)
 	@DisplayName("답변 데이터를 통해 질문 데이터 찾기 vs 질문 데이터를 통해 답변 데이터 찾기")
 	@Transactional
 	void givenQuestionIdWhenTransactionalFindAnswerListThenReturnAnswerList() {
